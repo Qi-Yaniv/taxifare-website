@@ -55,19 +55,21 @@ passenger_count = st.text_input('How many passenger', 2) # passenger_count: int
 '''
 
 #API stuff
-url = "http://localhost:8000/predict"
-if url == "http://localhost:8000/predict":
-    X_pred = pd.DataFrame([{
-            "pickup_datetime": pickup_datetime,
-            "pickup_longitude": pickup_longitude,
-            "pickup_latitude": pickup_latitude,
-            "dropoff_longitude": dropoff_longitude,
-            "dropoff_latitude": dropoff_latitude,
-            "passenger_count": passenger_count
-            }])
+url = "https://taxifare.lewagon.ai/predict"
+
+X_pred = pd.DataFrame([{
+        "pickup_datetime": pickup_datetime,
+        "pickup_longitude": pickup_longitude,
+        "pickup_latitude": pickup_latitude,
+        "dropoff_longitude": dropoff_longitude,
+        "dropoff_latitude": dropoff_latitude,
+        "passenger_count": passenger_count
+        }])
 
 params = X_pred.iloc[0].to_dict()
 response = requests.get(url, params=params)
 
-fare = response.json().get("fare")
-st.write(f"🤑 Fare: ${fare:.2f}")
+# fare = response.json().get("fare")
+# st.write(f"🤑 Fare: ${fare:.2f}")
+fare = response.json()
+st.write(fare)
